@@ -12,7 +12,7 @@ void delete_pos();
 int jual, num, i; 
 void searching();
 
-// untuk data akun
+// for account data
 char idakun[10];
 char password[12];
 int cash = 0;
@@ -21,32 +21,32 @@ void fordelay(int j);
 void tambahkurangdana();
 void help();
 
-// struct jual beli saham
+// struct buying and selling shares
 struct node{
 	
-    int info;																	// variabel harga emiten saat beli
-    char emiten[10];															// variabel nama emiten saat beli
-    int lot;																	// variabel lot saham yang dibeli
+    int info;
+    char emiten[10];
+    int lot;
     struct node *next;
 };
 
 struct node *start=NULL;
 
-// struct patch keamanan
+// security patch struct
 struct pembaruan{
 	
-	char patch[20];																// variabel nama patch keamanan yang ingin didownload
+	char patch[20];	
 	struct pembaruan *next;
 };
 
-typedef struct pembaruan Pembaruan;												// untuk mengaliasing struct Pembaruan ke pembaruan
-typedef Pembaruan *PembaruanPtr;												// untuk mengaliasing *PembaruanPtr ke Pembaruan
+typedef struct pembaruan Pembaruan;
+typedef Pembaruan *PembaruanPtr;
 
-// untuk sorting		
+// for sorting		
 void sortnama();
 void swap(struct node *a, struct node *b);
 
-// untuk patch keamanan
+// for security patches
 void updatepatch();
 void enQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1, char nama[20]);
 void deQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1);
@@ -55,9 +55,9 @@ void printQueue1(PembaruanPtr currentPtr);
 PembaruanPtr headPtr1 = NULL;
 PembaruanPtr tailPtr1 = NULL;
 
-// fungsi menu utama Sayur Asem Sekuritas
+// Main menu function of Sayur Asem Sekuritas
 int main(){
-    int choice;		// variabel untuk memilih pilihan
+    int choice;
     while(1){               
 		system("cls");
 		printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
@@ -65,7 +65,7 @@ int main(){
 		printf("===================================================  Selamat Datang  ===================================================\n\n");
 		printf("=====================================================  Menu Utama  =====================================================\n\n");
                 
-		displaycash();															// fungsi untuk menampilkan info akun yang dihimpun dari data awal
+		displaycash();
 		printf("\n\n\n [tekan 0] Bantuan");
 		printf("\n [tekan 1] Pengaturan Pengguna (Log in)");
         printf("\n [tekan 2] Portofolio");               
@@ -80,18 +80,18 @@ int main(){
     	scanf("%d",&choice);
         switch(choice){
         	case 0:
-        		help();															// fungsi help
+        		help();
         		break;
 			case 1:
-				dataawal();														// fungsi untuk login
+				dataawal();
 				break;
             case 2:
-            	menuportofolio();												// menu menampilkan portofolio
+            	menuportofolio();
 				break;            	
             case 3:
  				if(!strcmp(idakun,"sayurasem") && !strcmp(password,"12345")){
 				  
-                	belisaham();												// fungsi untuk membeli saham
+                	belisaham();
                 	break;				
     			}   			
 				else{
@@ -105,7 +105,7 @@ int main(){
 			case 4:
  				if(!strcmp(idakun,"sayurasem") && !strcmp(password,"12345")){
 				  
-                	jualsaham();												// fungsi untuk menjual saham
+                	jualsaham();
                 	break;				
     			}   			
 				else{
@@ -132,7 +132,7 @@ int main(){
             case 6:
  				if(!strcmp(idakun,"sayurasem") && !strcmp(password,"12345")){
 				  
-                	tambahkurangdana();											// fungsi untuk topup/ tarik dana
+                	tambahkurangdana();
                 	break;				
     			}   			
 				else{
@@ -144,7 +144,7 @@ int main(){
  				}
 
 			case 7:
-				updatepatch();													// fungsi untuk mengupdate patch keamanan
+				updatepatch();
 				break;				
             case 8:
 				system("cls");
@@ -159,7 +159,7 @@ int main(){
 				printf("	Pilihan: ");
 				scanf("%d",&choice);
 				switch(choice){
-					case 1: 													// keluar program
+					case 1: 
 					 	printf("\n\n  Loading");
 					    for(i=0;i<=6;i++){
 					        fordelay(100000000);
@@ -168,7 +168,7 @@ int main(){
 					    puts("\n\n  Program Selesai. Terima Kasih :)");
 						exit(0);
 						break;
-					case 2:														// kembali ke main
+					case 2:	
 						system("pause");
 						main();
 						break;
@@ -186,7 +186,6 @@ int main(){
     return 0;
 }
 
-// fungsi help: menampilkan bantuan/panduan yang bertujuan memudahkan pengguna memahami program
 void help(){
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
@@ -233,34 +232,33 @@ void help(){
 	getch();	
 }
 
-// menampilkan data akun dan cash
 void displaycash(){
-		/*ID akun akan menampilkan ID pengguna yang diinputkan pada saat login*/
+		/*The account ID will display the user ID entered at login*/
 		printf("\tID: %s\n", idakun);
-		/*Nilai dari cash akan berubah apabila kita mendeposit dana pada saat melogin akun.
-		Selain itu cash akan berkurag apabila pengguna membeli saham sesuai dengan harga saham
-		dan lotnya. Nilai cash akan bertambah apabila pengguna menjual sahamnya diatas harga
-		beli (jika dijual profit), dan akan menunjukkan hasil minus apabila pengguna menjual 
-		saham dibawah harga beli (loss)*/
+		/*The value of cash will change if we deposit funds when logging into the account.
+		  In addition, cash will decrease if the user buys shares according to the share price
+                  and the lot. The cash value will increase if the user sells his shares above the price
+                  buy (if sold profit), and will show minus results if the user sells
+                  shares below the purchase price (loss)*/
  		printf("\tCash: Rp%d\n", cash);
- 		/*Apabila nilai cash minus akibat dari pembelian saham yang melebihi cash yang ada,
-		 maka program akan menampilkan notice bahwa pengguna mengaktifkan margin, yaitu pinjaman
-		 yang diberikan broker kepada pengguna. Dalam t+2 apabila pelanggan belum melunasi dana,
-		 maka akan dikenakan biaya bunga senilai 2% dari minus cashnya*/
+ 		/*If the cash value is minus due to the purchase of shares that exceeds the existing cash,
+                  the program will display a notice that the user activates margin, that is, a loan
+                  provided by the broker to the user. In t + 2 if the customer has not paid off the funds,
+                  then you will be charged an interest fee of 2% minus the cash*/
  		if(cash < 0){
  			printf("\t * Anda mengaktifkan margin. Akan dikenakan bunga 2%% pada T+2 setiap harinya.");
 		}
 }
 
 
-// fungsi untuk memberi delay loading
+// function to provide loading delay
 void fordelay(int j)
 {   int i,k;
     for(i=0;i<j;i++)
          k=i;
 }
 
-// fungsi untuk login akun
+// function for account login
 int dataawal(){
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
@@ -313,9 +311,9 @@ void menuportofolio(){
 		printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 		printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
 		printf("=====================================================  PORTOFOLIO  =====================================================\n\n");
-		// fungsi untuk menampilkan info akun yang dihimpun dari data awal
+		// function to display account info compiled from initial data
 		displaycash();
-		// fungsi untuk menampilkan portofolio
+		// function to display portfolio
 		portofolio();
 		puts("\n\n  [tekan 1] Menyorting sesuai abjad");
 		puts("  [tekan 2] Mencetak Portofolio ke file txt");
@@ -325,8 +323,8 @@ void menuportofolio(){
 		scanf("%d",&choice);
 		switch(choice){
 							
-			case 1: 															// untuk mengurutkan portofolio
-				sortnama();														// fungsi untuk menampilkan watchlist
+			case 1:
+				sortnama();
 				system("cls");
 				printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 				printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
@@ -341,7 +339,7 @@ void menuportofolio(){
 			case 2:
 				cetakporto();
 				getch();	                
-			case 3:																// kembali ke main
+			case 3:	
 				system("pause");
 				main();
 				break;
@@ -361,7 +359,7 @@ void menuportofolio(){
  	}	
 }
 
-// fungsi untuk menampilkan portofolio
+// function to display portfolio
 void portofolio()
 {
 		struct node *ptr;
@@ -385,14 +383,14 @@ void portofolio()
                         ptr=ptr->next ;
                 }
                 printf("\t----------------------------------------------------------------------------------------\n");
-                /*Pada penampilan tabel ini, ditampilkan data data saham yang telah dibeli. Jika membeli saham, maka 
-				akan menambah baris pada tabel paling bawah. Jika menjual saham, maka baris yang dipilih akan terhapus
-				dari tabel yang menunjukkan saham tersebut sudah tidak ada pada portofolio. Nilai 2700 menunjukkan harga
-				saham saat ini yang diasumsikan statis mengikuti nilai IHSG. Jika harga beli kurang dari harga saat ini,
-				maka Pts akan menunjukkan plus (profit) sesuai perhitungan. Jika harga saham yang dibeli lebih dari harga
-				saat ini menandakan Pts minus (loss) sesuai perhitungan. Sebagai catatan bahwa perubahan nilai harga 
-				pada tabel ini bersifat floating (profit/loss) yang mana tidak akan menambah/mengurangi cash sebelum
-				saham tersebut dijual.*/
+                /*In the appearance of this table, the data on the shares that have been purchased are displayed. If buying shares, then
+                  will add rows to the bottom of the table. If you sell stock, the selected line will be deleted
+                  from the table that shows the stock is no longer in the portfolio. The value 2700 indicates the price
+                  current stocks which are assumed to be static follow the JCI value. If the purchase price is less than the current price,
+                  then Pts will show the plus (profit) according to the calculation. If the price of the shares purchased is more than the price
+                  now indicates minus Pts (loss) according to the calculation. Note that the value changes in price
+                  in this table is floating (profit / loss) which will not add / reduce cash before
+                  the shares are sold.*/
         }
 }
 
@@ -426,9 +424,9 @@ void cetakporto(){
    	getch();	
 }
 
-// fungsi menu untuk membeli saham
+// menu function to buy shares
 void belisaham(){
-	int ch;																		// variabel untuk memilih pilihan
+	int ch;	
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 	printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
@@ -453,10 +451,10 @@ void belisaham(){
  	}
 }
 
-// fungsi untuk membeli saham
+// the function to buy shares
 void insert_end()
 {
-	int ch;																		// variabel untuk memilih pilihan
+	int ch;	
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 	printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
@@ -516,17 +514,17 @@ void insert_end()
  	}
 }
 
-// fungsi untuk merandom harga buy saham
+// function to randomize the share buy price
 int randomharga(int key)
 {
-	int i;																		// variabel untuk membuat loop randomisasi
-    int lower = 100, upper = 500, count = 1;									// variabel randomisasi
+	int i;
+    int lower = 100, upper = 500, count = 1;
 
     srand(time(0));
     printf("\n\n  Harga %s hari ini: ", key);
     
     for (i = 0; i < count; i++) {
-        num = (rand() % (upper - lower + 1)) + lower;							// kalkulasi randomisasi agar teracak sempurna
+        num = (rand() % (upper - lower + 1)) + lower;
         printf("\n\n\t----------------");
         printf("\n\t|Price   | Vol |");
         printf("\n\t----------------");
@@ -540,17 +538,16 @@ int randomharga(int key)
     return num;
 }
 
-// fungsi untuk merandom harga sell saham
+// function to randomize the sell price of the stock
 int randomharga1(int key)
 {
-	int i;																		// variabel untuk membuat loop randomisasi
-    int lower = 300, upper = 500, count = 1;									// variabel randomisasi
-
+	int i;	
+    int lower = 300, upper = 500, count = 1;	\
     srand(time(0));
     printf("\n\n  Harga saham No. %d hari ini: ", key);
     
     for (i = 0; i < count; i++) {
-        num = (rand() % (upper - lower + 1)) + lower;							// kalkulasi randomisasi agar teracak sempurna
+        num = (rand() % (upper - lower + 1)) + lower;	
         printf("\n\n\t----------------");
         printf("\n\t|Price   | Vol |");
         printf("\n\t----------------");
@@ -564,10 +561,10 @@ int randomharga1(int key)
     return num;
 }
 
-// fungsi menu menjual saham
+// menu function sells stocks
 void jualsaham()
 {
-	int ch;																		// variabel untuk pilihan
+	int ch;		
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 	printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
@@ -596,10 +593,10 @@ void jualsaham()
  	}
 }
 
-// fungsi untuk menjual saham
+// function to sell shares
 void delete_pos()
 {
-    int i,pos, ch;  															// variabel i = untuk looping, pos = sebagai inputan saham mana yang akan dihapus, ch = variabel pilihan pada case
+    int i,pos, ch;  	
     struct node *temp,*ptr;
     temp=(struct node *)malloc(sizeof(struct node));
         
@@ -690,12 +687,10 @@ void searching(){
  	char cariemiten[10];
  	int found=0, chc;
  	int searchcount=1;
- 
  	if(start==NULL){
   		printf("\n  *  Tidak ada saham yang tersimpan\n");
   		return;
  	}
- 
  	for(;;){
  		
  		gets(dump);
@@ -711,7 +706,6 @@ void searching(){
 		    }
 		    t=t->next;
 	   	}
-  
 	  	if(found==1){
 	   		printf("\n");
 	   		printf("  Emiten |   Harga    |  Lot |\n");
@@ -727,10 +721,10 @@ void searching(){
  	}
 }
 
-//fungsi Top Up Cash
+// Cash Top Up function
 void tambahkurangdana(){
 	
-	int ch, topup, tarikdana;													// variabel topup = menambah cash, tarikdana = untuk menarik dana, ch = variabel pilihan pada case
+	int ch, topup, tarikdana;
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 	printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
@@ -748,9 +742,9 @@ void tambahkurangdana(){
  	{
 	 	case 1:printf("\n  Masukkan jumlah top-up:\n  >\tRp");	
 	 		scanf("%d",&topup);
-	 		cash = cash + topup;												// cash akan ditambahkan dengan topup
+	 		cash = cash + topup;		
 	 		printf("\n\n  Memproses Top-Up");
-        	for(i=0;i<=6;i++)													// digunakan untuk menampilkan animasi titik
+        	for(i=0;i<=6;i++)	
        		{
             	fordelay(100000000);
               	printf(".");
@@ -762,18 +756,18 @@ void tambahkurangdana(){
 	 	case 2:
 		 	printf("\n  Masukkan cash yang ingin ditarik:\n  >\tRp");
 	 		scanf("%d", &tarikdana);
-	 		cash = cash - tarikdana;											// cash akan dikurangkan dengan var tarik dana
+	 		cash = cash - tarikdana;
 	 		if(cash < 0) 
  			{ 
   				printf("\n\n  * Mohon maaf nilai yang ditarik melebihi cash Anda");
   				printf("\n    Silakan masukkan nominal yang benar.\n");
-  				cash = cash + tarikdana;										// kalkulasi ini dibuat untuk menyeimbangkan balance
+  				cash = cash + tarikdana;					
   				printf("\n\n > [Enter] untuk kembali");
   				getch();
-				tambahkurangdana();												// kembali ke fungsi topup/tarik dana
+				tambahkurangdana();						
     		}
     		printf("\n\n  Memproses Tarik Dana");
-        	for(i=0;i<=6;i++)													// digunakan untuk menampilkan animasi titik
+        	for(i=0;i<=6;i++)								
        		{
             	fordelay(100000000);
               	printf(".");
@@ -791,7 +785,7 @@ void tambahkurangdana(){
  	}
 }
 
-// fungsi sorting nama emiten
+// issuer name sorting function
 void sortnama(){
 	
  	struct node *t;
@@ -817,7 +811,7 @@ void sortnama(){
  	while (swapped);
 }
 
-// fungsi swap untuk sorting
+// swap function for sorting
 void swap(struct node *a, struct node *b){
  	
 	char tempemiten[10];
@@ -837,16 +831,16 @@ void swap(struct node *a, struct node *b){
  	b->lot = templot;	
 }
 
-// fungsi untuk mengupdate aplikasi
+// function to update the application
 void updatepatch(){
-	int pilihan;																// variabel untuk pilihan
-	char nama[20];																// variabel untuk menyimpan string patch yang akan diinstall
+	int pilihan;				
+	char nama[20];				
 	
 	system("cls");
 	printf("\n                                             =$$  Sayur Asem Sekuritas  $$=\n");
 	printf("                                                 ~~~~~~~~~~~~~~~~~~~~~~\n");	
 	printf("================================================  Update Patch Keamanan  ===============================================\n\n");
-	printQueue1(headPtr1);														// print data patch yang diinstall
+	printQueue1(headPtr1);			
 	puts("Masukan pilihan Anda:\n");
 	printf(" [tekan 1] Untuk Meng-install Patch terbaru\n\n [tekan 2] Untuk Uninstall patch terdahulu\n\n");
 	printf(" [tekan 3] Kembali ke Menu Utama");	
@@ -855,7 +849,7 @@ void updatepatch(){
 	scanf("%d", &pilihan);
 	while(pilihan!=6){
 		switch(pilihan){
-			case 1:																// menginstall patch
+			case 1:			
 				printf("\n\n  >  Patch keamanan yang ingin di-install: \n\t");
 				scanf("%s", &nama);
 				
@@ -871,7 +865,7 @@ void updatepatch(){
 				system("pause");
 				system("cls");								
 				break;
-			case 2:																// menguninstall patch
+			case 2:						
 				if(!isEmpty1(headPtr1)){
 					deQueue1(&headPtr1, &tailPtr1);
 				}
@@ -885,7 +879,7 @@ void updatepatch(){
 				system("pause");
 				system("cls");								
 				break;
-			case 3:																// kembali ke menu utama
+			case 3:						
 				main();
 				break;
 			default:
@@ -898,7 +892,7 @@ void updatepatch(){
 	}
 }
 
-// fungsi menambahkan patch ke antrian (queque)
+// the function of adding patches to the queue
 void enQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1, char nama[20]){
 	PembaruanPtr newPtr1;
 	
@@ -921,12 +915,12 @@ void enQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1, char nama[20]){
 	}
 }
 
-//fungsi mengurangi patch dalam antrian (queue), menghapus patch paling awal ditambahkan
+// function reduces queue patches, removes the earliest added patches
 void deQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1){
-	char nama[20];																// variabel patch
+	char nama[20];												
 	PembaruanPtr tempPtr1;
 	
-	strcpy(nama, (*headPtr1)->patch);											// fungsi komparasi *headPtr1)->patch ke nama
+	strcpy(nama, (*headPtr1)->patch);									
 	tempPtr1 = *headPtr1;
 	*headPtr1 = (*headPtr1)->next;
 	
@@ -940,17 +934,17 @@ void deQueue1(PembaruanPtr *headPtr1, PembaruanPtr *tailPtr1){
 	system("pause");
 }
 
-// fungsi untuk mengecek apakah headptr null atau tidak, jika null maka nilai akan menjadi headptrnya
+// function to check whether headptr is null or not, if it is null then the value will be the headptr
 int isEmpty1(PembaruanPtr headPtr1){		
 	return headPtr1 == NULL;
 }
 
-// menampilkan info keamanan
+// displays security info
 void printQueue1(PembaruanPtr currentPtr1){
-	if(currentPtr1 == NULL){													// jika tiadk ada patch yang terinstall
+	if(currentPtr1 == NULL){									
 		printf("  >  Patch keamanan Ter-install: \n\tBelum ada.\n\n\n");
 	}
-	else{																		// menampilkan patch saat ada patch yang masuk di queque
+	else{															
 		printf("  >  Patch keamanan saat ini: \n");
 		while(currentPtr1 != NULL){
 			printf("\t%s\n", strupr(currentPtr1->patch));
@@ -960,3 +954,4 @@ void printQueue1(PembaruanPtr currentPtr1){
 		printf("\n\n\n");
 	}
 }
+//end
