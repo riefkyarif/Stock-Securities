@@ -11,3 +11,16 @@ Calculating the profit / loss experienced by investors while investing.
 
 # The technique used
 Pointer, Structures, Malloc, Union/Enum, Linked List, Queue, Searching & Sorting, File Handling (write to txt file), Error Handling.
+
+# Display
+Main menu
+![image](https://user-images.githubusercontent.com/80331973/114055347-e3e97900-98ba-11eb-814e-5c82f0627848.png)
+
+Portfolio in program vs after printing to txt file
+![image](https://user-images.githubusercontent.com/80331973/114055522-0d0a0980-98bb-11eb-8344-187633134577.png)
+![image](https://user-images.githubusercontent.com/80331973/114055532-0f6c6380-98bb-11eb-9d10-6c515f6edbc8.png)
+
+Additional
+![image](https://user-images.githubusercontent.com/80331973/114055701-332fa980-98bb-11eb-8686-190740bd1a58.png)
+![image](https://user-images.githubusercontent.com/80331973/114055726-362a9a00-98bb-11eb-8741-6a99ebdb57ec.png)
+![image](https://user-images.githubusercontent.com/80331973/114055746-39258a80-98bb-11eb-9954-1be7d42ec771.png)
